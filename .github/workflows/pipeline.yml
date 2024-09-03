@@ -28,8 +28,7 @@ jobs:
 
       - name: Get Short SHA
         run: |
-          SHORT_SHA=$(git log -n1 --format=format:"%H:%h" | cut -d: -f2)
-          echo "::set-env name=SHORT_SHA::$SHORT_SHA"
+          echo "SHORT_SHA=$(git log -n1 --format=format:'%H:%h' | cut -d: -f2)" >> $GITHUB_ENV
 
       - name: Build and Tag Vote Docker Image
         id: build-image-vote
