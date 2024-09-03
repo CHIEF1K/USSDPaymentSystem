@@ -36,11 +36,11 @@ jobs:
         with:
           context:  ./callback-service
           push: false
-          tags: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:callback-"$SHORT_SHA"
+          tags: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:callback-${{ env.SHORT_SHA }}
 
       - name: Push Docker Image to ECR
         run: |
-          docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:callback-"$SHORT_SHA"
+          docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:callback-${{ env.SHORT_SHA }}
           echo "Push successful"
 
       - name: Build and Tag Vote Docker Image
