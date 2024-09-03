@@ -18,6 +18,6 @@ RUN composer install
 
 #RUN php artisan key:generate
 
-EXPOSE 5cd ..000
+EXPOSE 5000
 
 CMD ["php" , "artisan" , "serve" , "--host=0.0.0.0" ,"--port=5000"]
