@@ -3,10 +3,10 @@ name: Pushing Images to ECR
 on:
   push:
     branches:
-      - main
+      - test
 
 env:
-  IMAGE_TAG: ${{ github.sha }}
+  IMAGE_TAG: (${{ github.sha }})
 
 jobs:
   build-push:
@@ -26,17 +26,22 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Get Short SHA
+        run: |
+          SHORT_SHA=$(git log -n1 --format=format:"%H:%h" | cut -d: -f2)
+          echo "::set-env name=SHORT_SHA::$SHORT_SHA"
+
       - name: Build and Tag Vote Docker Image
         id: build-image-vote
         uses: docker/build-push-action@v2
         with:
           context:  ./callback-service
           push: false
-          tags: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:callback-${{ env.IMAGE_TAG }}
+          tags: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:callback-${{ SHORT_SHA }}
 
       - name: Push Docker Image to ECR
         run: |
-          docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:callback-${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:callback-${{ SHORT_SHA }}
           echo "Push successful"
 
       - name: Build and Tag Vote Docker Image
