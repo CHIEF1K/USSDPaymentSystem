@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PHPUnit">
+    <option name="directories">
+      <list>
+        <option value="$PROJECT_DIR$/NameValidation/tests" />
+        <option value="$PROJECT_DIR$/ussd-gateway-service/tests" />
+        <option value="$PROJECT_DIR$/callback-service/tests" />
+      </list>
+    </option>
+  </component>
+</project>
